@@ -29,7 +29,7 @@ export function Hero() {
           digital products that improve operations and accelerate growth.
         </Reveal>
         <Reveal className="hero-actions" delay={3}>
-          <Button href="#contact">Start a project</Button>
+          <Button href="#contact" className='mobile-book-call'>Start a project</Button>
           <Button href="#services" variant="ghost">
             Explore services
           </Button>

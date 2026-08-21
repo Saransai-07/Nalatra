@@ -52,6 +52,7 @@ export function Contact() {
     const { name, value } = event.target
     setValues((prev) => ({ ...prev, [name]: value }))
     setErrors((prev) => ({ ...prev, [name]: undefined }))
+    if (status === 'success') setStatus('idle')
   }
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -87,91 +88,104 @@ export function Contact() {
           you turn it into software that delivers measurable results.
         </Reveal>
 
-        <Reveal>
-          <form className="contact-form" onSubmit={onSubmit} noValidate>
-            <div className="field-grid">
+        <Reveal className="contact-form-wrap" delay={2}>
+          <div className="contact-form-card">
+            <div className="contact-form-header">
+              <span className="contact-form-badge">Get in touch</span>
+              <p>Share a few details and we’ll respond within one business day.</p>
+            </div>
+
+            <form className="contact-form" onSubmit={onSubmit} noValidate>
+              <div className="field-grid">
+                <div className="field">
+                  <label htmlFor={`${formId}-name`}>Name</label>
+                  <input
+                    id={`${formId}-name`}
+                    name="name"
+                    autoComplete="name"
+                    placeholder="Your full name"
+                    value={values.name}
+                    onChange={onChange}
+                    aria-invalid={Boolean(errors.name)}
+                    aria-describedby={errors.name ? `${formId}-name-error` : undefined}
+                  />
+                  {errors.name ? (
+                    <p className="field-error" id={`${formId}-name-error`} role="alert">
+                      {errors.name}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="field">
+                  <label htmlFor={`${formId}-email`}>Email</label>
+                  <input
+                    id={`${formId}-email`}
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@company.com"
+                    value={values.email}
+                    onChange={onChange}
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? `${formId}-email-error` : undefined}
+                  />
+                  {errors.email ? (
+                    <p className="field-error" id={`${formId}-email-error`} role="alert">
+                      {errors.email}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+
               <div className="field">
-                <label htmlFor={`${formId}-name`}>Name</label>
+                <label htmlFor={`${formId}-company`}>Company (optional)</label>
                 <input
-                  id={`${formId}-name`}
-                  name="name"
-                  autoComplete="name"
-                  value={values.name}
+                  id={`${formId}-company`}
+                  name="company"
+                  autoComplete="organization"
+                  placeholder="Your company name"
+                  value={values.company}
                   onChange={onChange}
-                  aria-invalid={Boolean(errors.name)}
-                  aria-describedby={errors.name ? `${formId}-name-error` : undefined}
                 />
-                {errors.name ? (
-                  <p className="field-error" id={`${formId}-name-error`} role="alert">
-                    {errors.name}
+              </div>
+
+              <div className="field">
+                <label htmlFor={`${formId}-message`}>How can we help?</label>
+                <textarea
+                  id={`${formId}-message`}
+                  name="message"
+                  rows={5}
+                  placeholder="Describe your project, timeline, or challenge..."
+                  value={values.message}
+                  onChange={onChange}
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={
+                    errors.message ? `${formId}-message-error` : undefined
+                  }
+                />
+                {errors.message ? (
+                  <p className="field-error" id={`${formId}-message-error`} role="alert">
+                    {errors.message}
                   </p>
                 ) : null}
               </div>
 
-              <div className="field">
-                <label htmlFor={`${formId}-email`}>Email</label>
-                <input
-                  id={`${formId}-email`}
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  value={values.email}
-                  onChange={onChange}
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? `${formId}-email-error` : undefined}
-                />
-                {errors.email ? (
-                  <p className="field-error" id={`${formId}-email-error`} role="alert">
-                    {errors.email}
-                  </p>
-                ) : null}
+              <div className="form-actions">
+                <Button type="submit" className="contact-submit">
+                  Send inquiry
+                </Button>
+                <a className="mailto-fallback" href={`mailto:${siteConfig.contactEmail}`}>
+                  or email {siteConfig.contactEmail}
+                </a>
               </div>
-            </div>
 
-            <div className="field">
-              <label htmlFor={`${formId}-company`}>Company (optional)</label>
-              <input
-                id={`${formId}-company`}
-                name="company"
-                autoComplete="organization"
-                value={values.company}
-                onChange={onChange}
-              />
-            </div>
-
-            <div className="field">
-              <label htmlFor={`${formId}-message`}>How can we help?</label>
-              <textarea
-                id={`${formId}-message`}
-                name="message"
-                rows={5}
-                value={values.message}
-                onChange={onChange}
-                aria-invalid={Boolean(errors.message)}
-                aria-describedby={
-                  errors.message ? `${formId}-message-error` : undefined
-                }
-              />
-              {errors.message ? (
-                <p className="field-error" id={`${formId}-message-error`} role="alert">
-                  {errors.message}
+              {status === 'success' ? (
+                <p className="form-success" role="status">
+                  Opening your email client… If nothing happens, use the address above.
                 </p>
               ) : null}
-            </div>
-
-            <div className="form-actions">
-              <Button type="submit">Send inquiry</Button>
-              <a className="mailto-fallback" href={`mailto:${siteConfig.contactEmail}`}>
-                or email {siteConfig.contactEmail}
-              </a>
-            </div>
-
-            {status === 'success' ? (
-              <p className="form-success" role="status">
-                Opening your email client… If nothing happens, use the address above.
-              </p>
-            ) : null}
-          </form>
+            </form>
+          </div>
         </Reveal>
       </div>
     </section>

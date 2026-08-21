@@ -1,19 +1,17 @@
 import { navLinks, siteConfig } from '@/data/content'
 import { useMobileMenu } from '@/hooks/useMobileMenu'
-import { useScrolled } from '@/hooks/useScrolled'
 import { cn } from '@/lib/utils'
 
 export function Header() {
-  const scrolled = useScrolled()
   const { open, toggle, close } = useMobileMenu()
 
   return (
     <>
-      <header className={cn('site-header', scrolled && 'is-scrolled')}>
+    <header className={cn('site-header')}>
         <a className="logo" href="#top" onClick={close}>
           <img
             className="logo-mark"
-            src="/brand/logo-mark.svg"
+            src="/nalatra2.svg"
             alt=""
             width={34}
             height={34}
@@ -24,16 +22,17 @@ export function Header() {
           </span>
         </a>
 
-        <nav className="nav" aria-label="Primary">
+        <nav className="nav nav-pill" aria-label="Primary">
           {navLinks.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}
             </a>
           ))}
-          <a className="nav-cta" href="#contact">
-            Talk to us
-          </a>
         </nav>
+
+        <a className="book-call-btn" href="#contact">
+          <span>Book a call</span>
+        </a>
 
         <button
           className="menu-toggle"
@@ -57,8 +56,8 @@ export function Header() {
             {link.label}
           </a>
         ))}
-        <a href="#contact" onClick={close}>
-          Talk to us
+        <a className="mobile-book-call" href="#contact" onClick={close}>
+          Book a call
         </a>
       </nav>
     </>

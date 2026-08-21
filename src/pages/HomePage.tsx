@@ -5,6 +5,7 @@ import { About } from '@/components/sections/About'
 import { Purpose } from '@/components/sections/Purpose'
 import { Services } from '@/components/sections/Services'
 import { WhyUs } from '@/components/sections/WhyUs'
+import { Comparison } from '@/components/sections/Comparison'
 import { Industries } from '@/components/sections/Industries'
 import { Contact } from '@/components/sections/Contact'
 
@@ -18,6 +19,7 @@ export function HomePage() {
         <Purpose />
         <Services />
         <WhyUs />
+        <Comparison />
         <Industries />
         <Contact />
       </main>
